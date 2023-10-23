@@ -1,0 +1,108 @@
+import styled from "styled-components";
+
+export const FlexBox = styled.div`
+  display: flex;
+  margin-top: 2.6rem;
+`;
+
+export const SearchButton = styled.button`
+  position: relative;
+  margin-left: 1.2rem;
+
+  width: 7rem;
+  height: 3.2rem;
+  flex-shrink: 0;
+
+  border-radius: 0.5rem;
+  background: #02b878;
+
+  color: #fff;
+  text-align: center;
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+`;
+
+export const SearchSelect = styled.select`
+  width: 18rem;
+  height: 3.2rem;
+  flex-shrink: 0;
+
+  margin-left: 2.3rem;
+  
+  font-size: 1.6rem;
+
+  border: 1px solid #cdcbcb;
+`;
+
+export const SearchOption = styled.option``;
+
+export const TableBox = styled.div`
+  margin-top: 2.2rem;
+  width: 150.1rem;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  text-align: center;
+  align-items: center;
+`;
+
+export const Table = styled.table`
+  width: 100%;
+`;
+
+export const TableHeader = styled.thead`
+  height: 4.6rem;
+
+  background: #f3f3f3;
+`;
+
+export const Th = styled.th`
+  color: #000;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+`;
+
+export const TableBody = styled.tbody`
+  width: 100%;
+
+  color: #000;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+`;
+
+export const BodyTr = styled.tr`
+  height: 5.5rem;
+
+  border: 1px solid #cdcbcb;
+  background: #fff;
+`;
+
+export const BodyTd = styled.td`
+`;
+
+export const ChatStatusDiv = styled.button`
+  //width: 7rem;
+  height: 3.2rem;
+  flex-shrink: 0;
+
+  text-align: center;
+  
+  border-radius: 0.5rem;
+  background: #02B878;
+
+  color: #225510;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  
+  cursor: auto;
+`
