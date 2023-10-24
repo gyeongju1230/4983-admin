@@ -263,7 +263,9 @@ export const Chats = () => {
                           value={option.value}
                           selected={option.value === value.interact}
                         >
-                          {option.name}
+                          {["4", "5"].includes(option.value)
+                            ? option.name + ":사물함선택전 사용 X"
+                            : option.name}
                         </option>
                       ))}
                     </select>
