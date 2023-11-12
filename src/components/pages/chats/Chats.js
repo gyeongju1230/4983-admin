@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Pagination from "@mui/material/Pagination";
+import { BASE_API } from "@/pages/api/baseApi";
 
 export const Chats = () => {
   const SEARCH_OPTIONS = [
@@ -90,8 +91,7 @@ export const Chats = () => {
       interact: interact,
     };
 
-    axios
-      .get("/api/v1/admin/chat", { params })
+    BASE_API.get("/api/v1/admin/chat", { params })
       .then((res) => {
         setTotalPages(res.data.totalPages);
         setPageable(res.data.pageable);

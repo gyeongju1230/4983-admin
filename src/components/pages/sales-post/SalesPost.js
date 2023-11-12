@@ -6,13 +6,15 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { BookStatusBox } from "@/components/pages/sales-post/book-status-box/BookStatusBox";
 import { useRouter } from "next/router";
+import { BASE_API } from "@/pages/api/baseApi";
 
 export const SalesPost = () => {
   const SEARCH_OPTIONS = [
+    { value: "ALL", name: "전체" },
     { value: "SALE", name: "판매중" },
     { value: "TRADE", name: "거래중" },
     { value: "SOLD", name: "거래완료" },
-    { value: "DELETE", name: "판매삭제" },
+    // { value: "DELETE", name: "판매삭제" },
   ];
 
   const [searchKeyword, setSearchKeyword] = useState("");
@@ -20,7 +22,7 @@ export const SalesPost = () => {
   const [page, setPage] = useState(1);
   const [pageable, setPageable] = useState({});
   const [totalPages, setTotalPages] = useState(1);
-  const [bookStatus, setBookStatus] = useState("SALE");
+  const [bookStatus, setBookStatus] = useState("ALL");
   const [changeBookStatus, setChangeBookStatus] = useState("");
 
   const router = useRouter();
@@ -29,8 +31,10 @@ export const SalesPost = () => {
   useEffect(() => {
     if (!router.isReady) return;
 
-    let searchKeyword = router.query.searchKeyword ? router.query.searchKeyword : "";
-    let bookStatus = router.query.bookStatus ? router.query.bookStatus : "SALE";
+    let searchKeyword = router.query.searchKeyword
+      ? router.query.searchKeyword
+      : "";
+    let bookStatus = router.query.bookStatus ? router.query.bookStatus : "ALL";
 
     const params = {
       searchKeyword: searchKeyword,
@@ -40,8 +44,7 @@ export const SalesPost = () => {
       bookStatus: bookStatus,
     };
 
-    axios
-      .get("/api/v1/admin/used-book", { params })
+    BASE_API.get("/api/v1/admin/used-book", { params })
       .then((res) => {
         setTotalPages(res.data.totalPages);
         setPageable(res.data.pageable);
@@ -152,7 +155,7 @@ export const SalesPost = () => {
                         width: "9.7rem",
                         height: "3.2rem",
                         border: "1px solid #CDCBCB",
-                        fontSize:"1.6rem"
+                        fontSize: "1.6rem",
                       }}
                     >
                       {SEARCH_OPTIONS.map((option) => (

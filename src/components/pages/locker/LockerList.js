@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { LockerStatusBox } from "@/components/pages/locker/locker-status-box/LockerStatusBox";
+import { BASE_API } from "@/pages/api/baseApi";
 
 export const LockerList = () => {
   const SEARCH_OPTIONS = [
@@ -34,7 +35,7 @@ export const LockerList = () => {
     setIsExists(isExists);
     setSearchKeyword(searchKeyword);
 
-    axios.get("/api/v1/admin/locker", { params }).then((res) => {
+    BASE_API.get("/api/v1/admin/locker", { params }).then((res) => {
       setLockerList(res.data);
     });
   }, [router.isReady]);
@@ -150,14 +151,13 @@ export const LockerList = () => {
                       const selectedLockerStatus = document.getElementById(
                         `${value.lockerNumber}LockerStatus`,
                       ).value;
-                      axios
-                        .patch(
-                          `/api/v1/admin/locker/${value.lockerNumber}/${selectedLockerStatus}`,
-                        )
-                        .then((res) => {
-                          alert("변경되었습니다.");
-                          window.location.reload();
-                        });
+
+                      BASE_API.patch(
+                        `/api/v1/admin/locker/${value.lockerNumber}/${selectedLockerStatus}`,
+                      ).then((res) => {
+                        alert("변경되었습니다.");
+                        window.location.reload();
+                      });
                     }}
                   >
                     변경

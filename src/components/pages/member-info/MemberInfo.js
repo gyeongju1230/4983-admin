@@ -6,6 +6,7 @@ import { BlockButton } from "@/components/pages/member-info/block-button/BlockBu
 import { Title } from "@/components/common/main-content/title/Title";
 import { KeywordInput } from "@/components/common/main-content/keyword-input/KeywordInput";
 import { useRouter } from "next/router";
+import { BASE_API } from "@/pages/api/baseApi";
 
 export const MemberInfo = () => {
   const [searchKeyword, setSearchKeyword] = useState("");
@@ -20,7 +21,9 @@ export const MemberInfo = () => {
   useEffect(() => {
     if (!router.isReady) return;
 
-    let searchKeyword = router.query.searchKeyword ? router.query.searchKeyword : "";
+    let searchKeyword = router.query.searchKeyword
+      ? router.query.searchKeyword
+      : "";
 
     const params = {
       searchKeyword: searchKeyword,
@@ -28,8 +31,7 @@ export const MemberInfo = () => {
       size: 12,
       sort: "id,desc",
     };
-    axios
-      .get("/api/v1/admin/member", { params })
+    BASE_API.get("/api/v1/admin/member", { params })
       .then((res) => {
         setTotalPages(res.data.totalPages);
         setPageable(res.data.pageable);

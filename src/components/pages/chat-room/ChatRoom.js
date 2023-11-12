@@ -2,6 +2,7 @@ import * as styles from "./ChatRoom.style";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { BASE_API } from "@/pages/api/baseApi";
 
 export const ChatRoom = () => {
   const [buyerMessageList, setBuyerMessageList] = useState([]);
@@ -14,12 +15,12 @@ export const ChatRoom = () => {
     if (!router.isReady) return;
     let chatRoomId = router.query.chatRoomId ? router.query.chatRoomId : 0;
 
-    axios.get(`/api/v1/admin/chat/${chatRoomId}/buyer`).then((res) => {
+    BASE_API.get(`/api/v1/admin/chat/${chatRoomId}/buyer`).then((res) => {
       console.log(res.data);
       setBuyerMessageList(res.data);
     });
 
-    axios.get(`/api/v1/admin/chat/${chatRoomId}/seller`).then((res) => {
+    BASE_API.get(`/api/v1/admin/chat/${chatRoomId}/seller`).then((res) => {
       console.log(res.data);
       setSellerMessageList(res.data);
     });
