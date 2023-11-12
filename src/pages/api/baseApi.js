@@ -9,10 +9,35 @@ BASE_API.interceptors.request.use((config) => {
   const accessToken = localStorage.getItem("accessToken");
 
   if (accessToken) {
-    config.headers.Authorization = accessToken;
+    axios
+      .get("/api/v1/token/valid", {
+        withCredentials: true,
+        headers: {
+          authorization: accessToken,
+        },
+      })
+      .then((res) => {
+        localStorage.setItem("accessToken", res.headers.authorization);
+        config.headers.Authorization = accessToken;
+      })
+      .catch((err) => {
+        localStorage.removeItem("accessToken");
+        axios
+          .get("/api/v1/token/update", {
+            withCredentials: true,
+          })
+          .then((res) => {
+            localStorage.setItem("accessToken", res.headers.authorization);
+            config.headers.Authorization = accessToken;
+            return config;
+          })
+          .catch((err) => {
+            localStorage.removeItem("accessToken");
+            alert("로그인이 만료되었습니다.");
+            window.location.href("/");
+          });
+      });
   }
-
-  return config;
 });
 
 BASE_API.interceptors.response.use(
@@ -28,19 +53,18 @@ BASE_API.interceptors.response.use(
       return Promise.reject(err);
     }
 
-    const {
-      headers: { authorization },
-    } = await axios.get("https://dev.deunku.com/api/v1/token/update", {
-      withCredentials: true,
-    });
-    localStorage.setItem("accessToken", authorization);
-
-    if (typeof authorization === "string") {
-      config.headers.Authorization = authorization;
-      return axios(config);
-    }
-
-    alert("로그인이 만료되었습니다");
-    window.location.href = "/";
+    await axios
+      .get("/api/v1/token/update", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        localStorage.setItem("accessToken", res.headers.authorization);
+        return axios(config);
+      })
+      .catch((err) => {
+        localStorage.removeItem("accessToken");
+        alert("로그인이 만료되었습니다");
+        window.location.href = "/";
+      });
   },
 );

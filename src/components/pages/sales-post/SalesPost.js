@@ -14,7 +14,7 @@ export const SalesPost = () => {
     { value: "SALE", name: "판매중" },
     { value: "TRADE", name: "거래중" },
     { value: "SOLD", name: "거래완료" },
-    // { value: "DELETE", name: "판매삭제" },
+    { value: "DELETE", name: "판매삭제" },
   ];
 
   const [searchKeyword, setSearchKeyword] = useState("");
