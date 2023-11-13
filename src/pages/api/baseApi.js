@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 export const BASE_API = axios.create({
   responseType: "json",
@@ -9,62 +9,45 @@ BASE_API.interceptors.request.use((config) => {
   const accessToken = localStorage.getItem("accessToken");
 
   if (accessToken) {
-    axios
-      .get("/api/v1/token/valid", {
-        withCredentials: true,
-        headers: {
-          authorization: accessToken,
-        },
-      })
-      .then((res) => {
-        localStorage.setItem("accessToken", res.headers.authorization);
-        config.headers.Authorization = accessToken;
-      })
-      .catch((err) => {
-        localStorage.removeItem("accessToken");
-        axios
-          .get("/api/v1/token/update", {
-            withCredentials: true,
-          })
-          .then((res) => {
-            localStorage.setItem("accessToken", res.headers.authorization);
-            config.headers.Authorization = accessToken;
-            return config;
-          })
-          .catch((err) => {
-            localStorage.removeItem("accessToken");
-            alert("로그인이 만료되었습니다.");
-            window.location.href("/");
-          });
-      });
+    config.headers.Authorization = accessToken;
+    return config;
   }
+  alert("로그인 후 이용해 주세요.");
+  window.location.assign("/");
 });
 
 BASE_API.interceptors.response.use(
   (res) => res,
-  async (err) => {
-    const {
-      config,
-      response: { status },
-    } = err;
-    const originalRequest = config;
+  async (error) => {
+    const err = error instanceof AxiosError ? error : error;
 
-    if (status !== 403) {
-      return Promise.reject(err);
+    if (err.response && err.response.status) {
+      if (err.response.status !== 403) {
+        return Promise.reject(error);
+      }
+      const accessToken = localStorage.getItem("accessToken");
+      if (accessToken) {
+        axios
+          .get("/api/v1/token/update", {
+            withCredentials: true,
+            headers: {
+              Authorization: accessToken,
+            },
+          })
+          .then((res) => {
+            localStorage.setItem("accessToken", res.headers.authorization);
+            const originalConfig = err.config;
+            originalConfig.headers.Authorization = res.headers.authorization;
+            return axios(originalConfig);
+          })
+          .catch(() => {
+            alert("로그인이 만료되었습니다.");
+            window.location.assign("/");
+          });
+      }
+      alert("로그인이 만료되었습니다.");
+      window.location.assign("/");
     }
-
-    await axios
-      .get("/api/v1/token/update", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        localStorage.setItem("accessToken", res.headers.authorization);
-        return axios(config);
-      })
-      .catch((err) => {
-        localStorage.removeItem("accessToken");
-        alert("로그인이 만료되었습니다");
-        window.location.href = "/";
-      });
+    return Promise.reject(error);
   },
 );

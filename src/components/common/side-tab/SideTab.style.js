@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Link from "next/link";
 
 export const SideTabContainer = styled.div`
-  position: relative;
+  position: absolute;
   width: 34.2rem;
   height: 100%;
 `;
