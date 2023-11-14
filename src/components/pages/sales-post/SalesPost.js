@@ -173,14 +173,12 @@ export const SalesPost = () => {
                         const selectedBookStatus = document.getElementById(
                           `${value.id}bookStatus`,
                         ).value;
-                        axios
-                          .patch(
-                            `/api/v1/admin/used-book/${value.id}/${selectedBookStatus}`,
-                          )
-                          .then((res) => {
-                            alert("변경되었습니다.");
-                            window.location.reload();
-                          });
+                        BASE_API.patch(
+                          `/api/v1/admin/used-book/${value.id}/${selectedBookStatus}`,
+                        ).then((res) => {
+                          alert("변경되었습니다.");
+                          window.location.reload();
+                        });
                       }}
                     >
                       변경

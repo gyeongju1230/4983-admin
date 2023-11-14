@@ -274,17 +274,16 @@ export const Chats = () => {
                         const selectedInteract = document.getElementById(
                           `${value.chatRoomId}searchOptions`,
                         ).value;
-                        axios
-                          .patch(
-                            `/api/v1/admin/chat/interact`,
-                            {},
-                            {
-                              params: {
-                                chatRoomId: value.chatRoomId,
-                                interact: selectedInteract,
-                              },
+                        BASE_API.patch(
+                          `/api/v1/admin/chat/interact`,
+                          {},
+                          {
+                            params: {
+                              chatRoomId: value.chatRoomId,
+                              interact: selectedInteract,
                             },
-                          )
+                          },
+                        )
                           .then((res) => {
                             alert("변경되었습니다.");
                             window.location.reload();
