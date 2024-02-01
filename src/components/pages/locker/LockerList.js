@@ -2,7 +2,6 @@ import { Title } from "@/components/common/main-content/title/Title";
 import { KeywordInput } from "@/components/common/main-content/keyword-input/KeywordInput";
 import * as styles from "@/components/pages/locker/LockerList.style";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useRouter } from "next/router";
 import { LockerStatusBox } from "@/components/pages/locker/locker-status-box/LockerStatusBox";
 import { BASE_API } from "@/pages/api/baseApi";
