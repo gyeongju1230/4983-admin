@@ -191,11 +191,9 @@ export const RegisterModal = ({
                 },
               },
             ).then((res) => {
-              // if (res.status === 204) {
-              //   alert("등록되었습니다.");
-              //   setIsModalOpened(false);
-              //   window.location.reload();
-              // }
+              alert("등록되었습니다.");
+              setIsModalOpened(false);
+              window.location.reload();
             });
 
             console.log(response);
