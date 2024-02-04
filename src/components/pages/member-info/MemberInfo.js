@@ -111,7 +111,7 @@ export const MemberInfo = () => {
                   <styles.BodyTd>{value.accountNumber}</styles.BodyTd>
                   <styles.BodyTd>{value.accountHolder}</styles.BodyTd>
                   <styles.BodyTd>
-                    <BlockButton id={value.id} isBlocked={value.isBlocked} />
+                    <BlockButton id={value.id} isBlocked={value.isWithdraw} />
                   </styles.BodyTd>
                 </styles.BodyTr>
               );
