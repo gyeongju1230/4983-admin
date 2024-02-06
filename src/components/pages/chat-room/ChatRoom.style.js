@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
-
   justify-content: center;
   gap: 10rem;
 `;
@@ -17,13 +16,13 @@ export const ChatListBox = styled.div`
 `;
 
 export const ChatInputContainer = styled.div`
-  position: fixed;
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 37.5rem;
   height: 6.2rem;
-  bottom: 5.5rem;
+  bottom: -6.2rem;
   background: var(--b-10, #f6f6f6);
   overflow-y: hidden;
   z-index: 1000;
@@ -72,7 +71,6 @@ export const ChatListContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-
   gap: 3rem;
 `;
 
