@@ -7,7 +7,7 @@ export const BlockButton = ({ id, isBlocked }) => {
     return (
       <styles.NotBlockedButtonBox
         onClick={() => {
-          let isConfirm = confirm("차단을 제하시겠습니까?");
+          let isConfirm = confirm("차단을 해제하시겠습니까?");
           if (isConfirm) {
             BASE_API.patch(`/api/v1/admin/member/block/${id}`)
               .then((res) => {
